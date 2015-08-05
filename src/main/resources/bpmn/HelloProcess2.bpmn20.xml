@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef" xmlns:modeler="http://activiti.com/modeler" modeler:version="1.0ev" modeler:exportDateTime="20150723102054" modeler:modelId="952377" modeler:modelVersion="1" modeler:modelLastUpdated="1437643251134">
+  <process id="helloProcess" name="HelloProcess" isExecutable="true">
+    <startEvent id="startEvent1"/>
+    <endEvent id="endEvent1"/>
+    <sequenceFlow id="sid-4BEBE2D6-9C4C-4776-B09A-ED6DD2ED69A5" sourceRef="startEvent1" targetRef="scriptTask1"/>
+    <intermediateCatchEvent id="timerEvent1" name="Cekaj">
+      <timerEventDefinition>
+        <timeDuration>PT1M</timeDuration>
+      </timerEventDefinition>
+    </intermediateCatchEvent>
+    <serviceTask id="serviceTask2" name="Pozovi java kod" activiti:expression="${printer.printMessage()}"/>
+    <sequenceFlow id="sid-F9A6C48F-5A0B-4740-B80F-CE30304C2EF0" sourceRef="serviceTask2" targetRef="endEvent1"/>
+    <sequenceFlow id="sid-E82D07E7-5BDC-4246-B587-F93FD1A78067" sourceRef="scriptTask1" targetRef="timerEvent1"/>
+    <sequenceFlow id="sid-ED42A856-F492-4D7F-8402-91943A4A4804" sourceRef="timerEvent1" targetRef="serviceTask2"/>
+    <scriptTask id="scriptTask1" name="Skripta" scriptFormat="Groovy" activiti:autoStoreVariables="false">
+      <script>out:println "Inicijalna skripta"</script>
+    </scriptTask>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_helloProcess">
+    <bpmndi:BPMNPlane bpmnElement="helloProcess" id="BPMNPlane_helloProcess">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="75.0" y="160.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent1" id="BPMNShape_endEvent1">
+        <omgdc:Bounds height="28.0" width="28.0" x="720.0" y="161.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="timerEvent1" id="BPMNShape_timerEvent1">
+        <omgdc:Bounds height="31.0" width="31.0" x="375.0" y="159.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="serviceTask2" id="BPMNShape_serviceTask2">
+        <omgdc:Bounds height="80.0" width="100.0" x="525.0" y="135.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scriptTask1" id="BPMNShape_scriptTask1">
+        <omgdc:Bounds height="80.0" width="100.0" x="165.0" y="135.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-E82D07E7-5BDC-4246-B587-F93FD1A78067" id="BPMNEdge_sid-E82D07E7-5BDC-4246-B587-F93FD1A78067">
+        <omgdi:waypoint x="265.0" y="175.14204545454547"/>
+        <omgdi:waypoint x="375.00006456572487" y="175.45454563797082"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-ED42A856-F492-4D7F-8402-91943A4A4804" id="BPMNEdge_sid-ED42A856-F492-4D7F-8402-91943A4A4804">
+        <omgdi:waypoint x="407.0" y="175.5"/>
+        <omgdi:waypoint x="525.0" y="175.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-F9A6C48F-5A0B-4740-B80F-CE30304C2EF0" id="BPMNEdge_sid-F9A6C48F-5A0B-4740-B80F-CE30304C2EF0">
+        <omgdi:waypoint x="625.0" y="175.0"/>
+        <omgdi:waypoint x="720.0" y="175.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-4BEBE2D6-9C4C-4776-B09A-ED6DD2ED69A5" id="BPMNEdge_sid-4BEBE2D6-9C4C-4776-B09A-ED6DD2ED69A5">
+        <omgdi:waypoint x="105.0" y="175.0"/>
+        <omgdi:waypoint x="165.0" y="175.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

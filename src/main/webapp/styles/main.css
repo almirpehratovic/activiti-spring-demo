@@ -1,0 +1,67 @@
+body {
+	background: #333;
+	color: white;
+}
+
+.title {
+	color: #428e21;
+	font-weight: bold;	
+}
+
+
+a {
+	color: yellow;
+}
+
+.error {
+	color: red;
+}
+
+#pageWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#headerWrapper {
+	order: 1;
+	margin: auto;
+}
+
+#contentWrapper {
+	order: 2;
+	margin: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+/*
+#menu {
+	width: 10%;
+	margin: auto;
+}*/
+
+#main {
+	margin: 5%;	
+}
+
+/*#footer {
+	border:none;
+    margin-top:15px;
+    border-top:1px solid #999999;
+}*/
+
+.viewtable {
+	border: 1px solid white;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+thead {
+	font-weight: bold;
+}
+
+.languages > a {
+	text-decoration: none;
+}
