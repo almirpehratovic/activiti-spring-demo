@@ -37,6 +37,12 @@ import ba.pehli.activiti.service.BudgetDao;
 import ba.pehli.activiti.service.OrderDao;
 import ba.pehli.activiti.service.UserDao;
 
+/**
+ * Main controller in aplication. Can start bpmn process and enables user task processing.
+ * @author almir
+ *
+ */
+
 @Controller
 @RequestMapping("/orders")
 public class OrdersController implements ApplicationContextAware{
@@ -47,7 +53,12 @@ public class OrdersController implements ApplicationContextAware{
 	private UserDao userDao;
 	private BudgetDao budgetDao;
 	
-
+	
+	/**
+	 * Show main page with all orders and budgets
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.GET)
 	public String showOrders(Model model){
 		model.addAttribute("orders", orderDao.findAllOrders());
@@ -55,13 +66,17 @@ public class OrdersController implements ApplicationContextAware{
 		return "orders/list";
 	}
 	
+	
+	/**
+	 * Starts bpmn process
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/start/{id}",method=RequestMethod.GET)
 	public String startProcess(@PathVariable("id") int id ,Model model){
 		
 		ProcessEngine pe = ctx.getBean("processEngine", ProcessEngine.class);
-		/*RepositoryService repositoryService = ctx.getBean("repositoryService", RepositoryService.class);
-		IdentityService identityService = ctx.getBean("identityService",IdentityService.class);
-		TaskService taskService = ctx.getBean("taskService", TaskService.class);*/
 		RuntimeService runtimeService = ctx.getBean("runtimeService", RuntimeService.class);
 		
 		try {
@@ -89,6 +104,12 @@ public class OrdersController implements ApplicationContextAware{
 		return "redirect:/orders";
 	}
 	
+	/**
+	 * Just shows page with image of process
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/view/{id}", method=RequestMethod.GET)
 	public String showPocessImage(@PathVariable("id") int id ,Model model) {
 		Order order = orderDao.findOrderById(id);
@@ -96,6 +117,12 @@ public class OrdersController implements ApplicationContextAware{
 		return "orders/view";
 	}
 	
+	/**
+	 * Generates process image
+	 * @param processInstanceId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/image/{processInstanceId}", method=RequestMethod.GET)
 	@ResponseBody
 	public byte[] generatePocessImage(@PathVariable("processInstanceId") String processInstanceId ,Model model) {
@@ -121,6 +148,11 @@ public class OrdersController implements ApplicationContextAware{
 		return bytes;
 	}
 	
+	/**
+	 * Shows page with all user tasks for authenticated user and his role
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/tasks", method=RequestMethod.GET)
 	public String showTasks(Model model) {
 		ProcessEngine pe = ctx.getBean("processEngine", ProcessEngine.class);
@@ -155,6 +187,12 @@ public class OrdersController implements ApplicationContextAware{
 		return "orders/tasks";
 	}
 	
+	/**
+	 * Approving of user task
+	 * @param taskId
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/tasks/{taskId}", method=RequestMethod.GET)
 	public String completeTask(@PathVariable("taskId") String taskId,Model model) {
 		TaskService taskService = ctx.getBean("taskService",TaskService.class);

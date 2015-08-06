@@ -3,6 +3,11 @@ package ba.pehli.activiti.domain;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * Task for one user. Filled by controller and shown in jsp
+ * @author almir
+ *
+ */
 public class UserTask {
 	private String id;
 	private String name;

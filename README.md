@@ -3,7 +3,11 @@
 The main purpose of this project is to learn and demonstrate various Activiti features. Application shows simple ordering business process and web aplication for starting and monitoring this process. The app is work in progress!
 
 ## Ordering process
-Here is a simple description of ordering process used in this application. CONTINUE
+Here is a simple description of ordering process used in this application.
+
+![process](images/process.png)
+
+After user (with role referent) starts process, script task ('Slanje narudzbenice na kontrolu') is executed and after that user task is created. In this example, two user roles (kontrolor and menadzer) have to approve order. If order is not approved in 20 minutes, order is destroyed. After order approval, subprocess is started. Main parts in subprocess are control of budget and generating error (if there is not enough money) or decrementing budget and generating supplement documents (if there is enough money). All service task are calling TestBean which actually does the job of dealing with orders and budgets.
 
 ## Getting Started
 

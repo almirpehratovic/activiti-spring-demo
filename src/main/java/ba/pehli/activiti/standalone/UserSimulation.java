@@ -6,6 +6,12 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.task.Task;
 
+/**
+ * Simulation of user completing user tasks from process, for the purpose of
+ * standalone example.
+ * @author almir
+ *
+ */
 public class UserSimulation implements Runnable{
 	private IdentityService identityService;
 	private TaskService taskService;

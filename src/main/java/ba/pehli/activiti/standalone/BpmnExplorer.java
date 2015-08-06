@@ -20,6 +20,12 @@ import ba.pehli.activiti.domain.AppUser;
 import ba.pehli.activiti.service.OrderDao;
 import ba.pehli.activiti.service.UserDao;
 
+/**
+ * Starts standalone example of process. Every finished process activity will generate 
+ * process picture in root folder of project.
+ * @author almir
+ *
+ */
 public class BpmnExplorer {
 	public static final String PROCESS_KEY = "helloProcess";
 	public static void main(String[] args){

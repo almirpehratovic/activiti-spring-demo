@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+/**
+ * Application user and JPA mapping.
+ * @author almir
+ *
+ */
 
 @Entity
 @Table(name="users")

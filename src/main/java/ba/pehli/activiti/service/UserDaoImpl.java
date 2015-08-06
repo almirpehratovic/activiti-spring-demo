@@ -11,6 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ba.pehli.activiti.domain.AppUser;
 
+/**
+ * Database operations for AppUser class
+ * @author almir
+ *
+ */
+
 @Service("userDao")
 @Transactional
 public class UserDaoImpl implements UserDao{
@@ -27,6 +33,9 @@ public class UserDaoImpl implements UserDao{
 		return (AppUser)sessionFactory.getCurrentSession().getNamedQuery("User.findByUsername").setParameter("username",username).uniqueResult();
 	}
 	
+	/**
+	 * Returns authenticated user in web app.
+	 */
 	@Override
 	public AppUser getAuthenticatedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

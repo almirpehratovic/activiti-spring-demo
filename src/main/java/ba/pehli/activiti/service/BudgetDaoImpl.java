@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ba.pehli.activiti.domain.Budget;
 
+/**
+ * Database operations for Budget class
+ * @author almir
+ *
+ */
 @Transactional
 @Service("budgetDao")
 public class BudgetDaoImpl implements BudgetDao{

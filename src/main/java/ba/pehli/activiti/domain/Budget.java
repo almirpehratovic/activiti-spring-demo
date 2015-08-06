@@ -9,6 +9,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+/**
+ * Class that shows how much money do we have on specified account.
+ * @author almir
+ *
+ */
+
 @Entity
 @Table(name="budgets")
 @NamedQueries({

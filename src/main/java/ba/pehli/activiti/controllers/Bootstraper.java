@@ -46,7 +46,11 @@ public class Bootstraper implements ActivitiEventListener,ApplicationContextAwar
 	    }
 		
 	}
-
+	
+	/**
+	 * Reads all users from database and inserts in ProcessEngine with the help
+	 * of IdentityService
+	 */
 	private void insertUsers() {
 		IdentityService identityService = ctx.getBean("identityService",IdentityService.class);
 		UserDao userDao = ctx.getBean("userDao", UserDao.class);
@@ -66,7 +70,6 @@ public class Bootstraper implements ActivitiEventListener,ApplicationContextAwar
 			
 			identityService.saveUser(user);
 			identityService.createMembership(user.getId(), group.getId());
-			//identityService.setAuthenticatedUserId(user.getId());
 		}
 		
 	}

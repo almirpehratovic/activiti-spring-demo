@@ -13,7 +13,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 
-
+/**
+ * Generates process image when any activity ends.
+ * @author almir
+ *
+ */
 public class ExecutionMonitor implements ActivitiEventListener,ApplicationContextAware,ExecutionListener {
 	
 	private ApplicationContext ctx;

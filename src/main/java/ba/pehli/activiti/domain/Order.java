@@ -9,6 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/*
+ * Simple order and mapping to database table via JPA
+ */
+
 @Entity
 @Table(name="orders")
 public class Order implements Serializable{
@@ -22,10 +26,10 @@ public class Order implements Serializable{
 		
 	}
 	
-	public Order(int id, String konto, double iznos, String status) {
+	public Order(int id, String account, double amount) {
 		this.id = id;
-		this.account = konto;
-		this.amount = iznos;
+		this.account = account;
+		this.amount = amount;
 	}
 	
 	@Id

@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ba.pehli.activiti.domain.Order;
 
+/**
+ * Database operations for Order class
+ * @author almir
+ *
+ */
 @Service("orderDao")
 @Transactional
 public class OrderDaoImpl implements OrderDao{

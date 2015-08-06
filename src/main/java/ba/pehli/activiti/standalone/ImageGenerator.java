@@ -14,6 +14,11 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 
+/**
+ * Utility class for process image generation.
+ * @author almir
+ *
+ */
 public class ImageGenerator implements Runnable{
 	private RepositoryService repositoryService;
 	private RuntimeService runtimeService;
