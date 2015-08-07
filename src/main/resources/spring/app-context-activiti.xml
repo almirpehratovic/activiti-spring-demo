@@ -18,15 +18,15 @@
 		<property name="mailServerHost" value="smtp.gmail.com" />
 		<property name="mailServerPort" value="587" />
 		<property name="mailServerDefaultFrom" value="oceansarajevo@gmail.com" />
-		<property name="mailServerUsername" value="*****" />
-		<property name="mailServerPassword" value="*****" />
+		<property name="mailServerUsername" value="oceansarajevo@gmail.com" />
+		<property name="mailServerPassword" value="Atlantik9999" />
 		<property name="mailServerUseTLS" value="true" />
 		<property name="mailServerUseSSL" value="true" />
 		<property name="history" value="full" />
 		<property name="deploymentResources" value="classpath:bpmn/HelloProcess.bpmn20.xml"/>
 		<property name="eventListeners">
 			<list>
-				<bean class="ba.pehli.activiti.controllers.Bootstraper"/>
+				<bean class="ba.pehli.activiti.utils.Bootstraper"/>
 			</list>
 		</property>
 	</bean>

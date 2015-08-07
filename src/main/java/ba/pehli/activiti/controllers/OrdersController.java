@@ -7,11 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.ActivitiObjectNotFoundException;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.ProcessDefinition;
@@ -129,14 +133,30 @@ public class OrdersController implements ApplicationContextAware{
 		ProcessEngine pe = ctx.getBean("processEngine", ProcessEngine.class);
 		RepositoryService repositoryService = ctx.getBean("repositoryService", RepositoryService.class);
 		RuntimeService runtimeService = ctx.getBean("runtimeService", RuntimeService.class);
+		HistoryService historyService = ctx.getBean("historyService", HistoryService.class);
 		
 		ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_KEY).singleResult();
 		
-		List<String> activeActivities = runtimeService.getActiveActivityIds(processInstanceId);
+		
+		List<String> activeActivities = new ArrayList<String>();
+		try {
+			activeActivities = runtimeService.getActiveActivityIds(processInstanceId);
+		} catch (ActivitiObjectNotFoundException e){
+			// process is finished, search for it in history
+			//HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+			//activeActivities.add(hpi.getEndActivityId());
+			
+			List<HistoricActivityInstance> haiList = historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).list();
+			for (HistoricActivityInstance hai : haiList){
+				if (hai.getActivityType().toLowerCase().contains("task")
+						|| hai.getActivityType().toLowerCase().contains("event"))
+					activeActivities.add(hai.getActivityId());
+			}
+		}
 		
 		DefaultProcessDiagramGenerator pdg = new DefaultProcessDiagramGenerator();
 		InputStream is = pdg.generateDiagram(repositoryService.getBpmnModel(pd.getId()),
-				"png",runtimeService.getActiveActivityIds(processInstanceId));
+				"png",activeActivities);
 		
 		byte[] bytes = null;
 		try {
