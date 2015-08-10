@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -18,8 +19,12 @@ import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.PvmTransition;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
+import org.activiti.image.ProcessDiagramGenerator;
 import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.BeansException;
@@ -40,6 +45,7 @@ import ba.pehli.activiti.domain.UserTask;
 import ba.pehli.activiti.service.BudgetDao;
 import ba.pehli.activiti.service.OrderDao;
 import ba.pehli.activiti.service.UserDao;
+import ba.pehli.activiti.utils.CustomProcessDiagramGenerator;
 
 /**
  * Main controller in aplication. Can start bpmn process and enables user task processing.
@@ -136,25 +142,30 @@ public class OrdersController implements ApplicationContextAware{
 		HistoryService historyService = ctx.getBean("historyService", HistoryService.class);
 		
 		ProcessDefinition pd = repositoryService.createProcessDefinitionQuery().processDefinitionKey(PROCESS_KEY).singleResult();
+		ProcessDefinitionEntity pde = (ProcessDefinitionEntity) pd;
 		
-		
+		boolean isFinished = false;
 		List<String> activeActivities = new ArrayList<String>();
 		try {
 			activeActivities = runtimeService.getActiveActivityIds(processInstanceId);
 		} catch (ActivitiObjectNotFoundException e){
 			// process is finished, search for it in history
-			//HistoricProcessInstance hpi = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-			//activeActivities.add(hpi.getEndActivityId());
-			
+			isFinished = true;
 			List<HistoricActivityInstance> haiList = historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).list();
 			for (HistoricActivityInstance hai : haiList){
-				if (hai.getActivityType().toLowerCase().contains("task")
-						|| hai.getActivityType().toLowerCase().contains("event"))
-					activeActivities.add(hai.getActivityId());
+				activeActivities.add(hai.getActivityId());
 			}
 		}
 		
-		DefaultProcessDiagramGenerator pdg = new DefaultProcessDiagramGenerator();
+		System.out.println(activeActivities);
+			
+		ProcessDiagramGenerator pdg = null;
+		if (isFinished){
+			pdg = new CustomProcessDiagramGenerator();	// GREEN
+		} else {
+			pdg = new DefaultProcessDiagramGenerator(); // RED
+		}
+		
 		InputStream is = pdg.generateDiagram(repositoryService.getBpmnModel(pd.getId()),
 				"png",activeActivities);
 		
